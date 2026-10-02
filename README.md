@@ -1,5 +1,7 @@
 # 步行 (SG Walk Shortcut), by 两兄弟
 
+**Live:** https://kokhui.github.io/sg-walk-shortcut/ (landing page) and https://kokhui.github.io/sg-walk-shortcut/app.html (the app), hosted on GitHub Pages from `main`. The hosted copy has everything except the AI-reworded directions, which need `tools/serve.py` running. It shows the router's own step-by-step directions instead.
+
 Google Maps walking directions often keep to roads and miss the shortcuts you actually take through HDB void decks, covered linkways and building passages. This static web app asks routers built on OpenStreetMap data, which do know many of those passages, and shows their routes side by side with distance and walking time.
 
 ## Run

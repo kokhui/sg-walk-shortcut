@@ -743,7 +743,11 @@ async function requestAiDirections(key) {
   } catch (err) {
     if (ctrl.signal.aborted) return;   // a newer route took over
     if (err.unavailable) ai.off = true;
-    if (state.directions && state.directions.key === key) showDirections(err.message);
+    // On a static host (GitHub Pages) there is no serve.py: just keep the router's steps, without a hint
+    // that only makes sense to whoever runs the app locally.
+    const local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+    const msg = err.unavailable && !local ? "" : err.message;
+    if (state.directions && state.directions.key === key) showDirections(msg);
   } finally {
     if (ai.ctrl === ctrl) ai.ctrl = null;
   }

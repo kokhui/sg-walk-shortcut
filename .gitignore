@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+
+# Local secrets (serve.py reads OPENCODE_API_KEY from env or ../lunch-uncle/.env)
+.env
+.dev.vars
+
+# Scratch renders
+promo/preview.png
+
+# OS
+.DS_Store
+Thumbs.db

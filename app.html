@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>步行 · Walk Shortcut</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23d6336c'/%3E%3Ctext x='32' y='45' font-size='36' text-anchor='middle' fill='white' font-family='sans-serif'%3E%E6%AD%A5%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="map"></div>
+
+  <aside id="panel">
+    <header class="brand">
+      <div>
+        <h1><a href="./" class="home" title="About 步行">步行</a> <span class="h1-sub">Walk Shortcut</span></h1>
+        <p class="sub">Walking routes that cut through void decks &amp; linkways</p>
+      </div>
+      <button id="locate" class="btn" title="Use my location as start">◎ Me</button>
+    </header>
+
+    <div class="points">
+      <div class="search" data-point="a">
+        <span class="pin pin-a">A</span>
+        <input id="qa" type="search" placeholder="Start: search a place or tap the map" autocomplete="off" />
+        <ul class="results" hidden></ul>
+      </div>
+      <button id="swap" class="btn icon" title="Swap start and end">⇅</button>
+      <div class="search" data-point="b">
+        <span class="pin pin-b">B</span>
+        <input id="qb" type="search" placeholder="End: search a place or tap the map" autocomplete="off" />
+        <ul class="results" hidden></ul>
+      </div>
+    </div>
+
+    <section id="empty" class="empty">
+      <p><strong>Tap the map</strong> twice (start, then end) or search above. Drag the pins to adjust.</p>
+      <p class="muted">Try a <a href="#a=1.332600,103.847000&amp;b=1.335200,103.850700">Toa Payoh HDB walk</a>.</p>
+    </section>
+
+    <section id="routes" hidden>
+      <h2>Routes</h2>
+      <p id="weather" class="weather" hidden></p>
+      <div id="cards"></div>
+      <p class="muted small">Times use the same 1.3 m/s walking pace for every engine, so only the path differs.</p>
+      <div class="links">
+        <a id="gmaps" class="btn" target="_blank" rel="noopener">Compare in Google Maps ↗</a>
+      </div>
+    </section>
+
+    <section id="directions" hidden>
+      <div class="dir-head">
+        <h2>Directions <span class="muted">(Shortcut route)</span></h2>
+        <button id="ai-toggle" class="btn" type="button" hidden title="Switch between the AI wording and the router's detailed steps">Detailed steps</button>
+      </div>
+      <ol id="steps"></ol>
+      <p id="dir-status" class="muted small"></p>
+    </section>
+
+    <section class="tools">
+      <p class="label">Shortcut router may cut through</p>
+      <label class="toggle"><input id="cut-hdb" type="checkbox" checked /> HDB blocks (void decks)</label>
+      <label class="toggle"><input id="cut-mall" type="checkbox" checked /> Malls, markets, stations &amp; public buildings</label>
+      <p class="muted small">OSM rarely maps paths inside these, so the Shortcut route assumes you can walk through. Dashed white = inside a building. Gated condos marked private are skipped.</p>
+      <label class="toggle"><input id="passages" type="checkbox" checked /> Show mapped passages <span class="legend-dash"></span></label>
+      <p id="passage-status" class="muted small"></p>
+      <a id="osm-edit" class="small" target="_blank" rel="noopener">Shortcut missing? Add it to OpenStreetMap ↗</a>
+    </section>
+
+    <details class="settings">
+      <summary>OneMap walking route (optional)</summary>
+      <p class="muted small">OneMap's router needs a free API token from
+        <a href="https://www.onemap.gov.sg/apidocs/register" target="_blank" rel="noopener">onemap.gov.sg</a>.
+        It is stored only in this browser.</p>
+      <div class="row">
+        <input id="token" type="password" placeholder="Paste OneMap token" autocomplete="off" />
+        <button id="save-token" class="btn">Save</button>
+      </div>
+    </details>
+
+    <footer class="muted small">
+      Routes: <a href="https://valhalla.github.io/valhalla/" target="_blank" rel="noopener">Valhalla</a> &amp;
+      <a href="https://routing.openstreetmap.de/" target="_blank" rel="noopener">OSRM (FOSSGIS)</a> on
+      <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> data.
+      Map data for shortcuts: <a href="https://overpass-api.de/" target="_blank" rel="noopener">Overpass API</a>. Weather: <a href="https://data.gov.sg/" target="_blank" rel="noopener">NEA via data.gov.sg</a>.<span id="data-date"></span>
+    </footer>
+  </aside>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="lib.js"></script>
+  <script src="router.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
